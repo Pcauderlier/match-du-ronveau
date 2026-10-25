@@ -1,0 +1,550 @@
+<title>Le Match du Ronvau</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;700;900&family=Bebas+Neue&display=swap">
+<style>
+:root{
+  --noir:#08090C; --noir2:#111318; --or:#F2A31B; --rouge:#D8202C; --bleu:#00338D;
+  --creme:#F4F1EA; --gris:rgba(244,241,234,.62); --ligne:rgba(244,241,234,.16);
+  --anton:Anton,'Arial Narrow',Impact,sans-serif;
+  --archivo:Archivo,'Helvetica Neue',Arial,sans-serif;
+  --bebas:'Bebas Neue','Arial Narrow',sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--noir);color:var(--creme);font-family:var(--archivo);
+ font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px;}
+
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding-inline:20px;}
+
+/* ---------- BARRE ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(8,9,12,.97);
+ border-bottom:1px solid var(--ligne);backdrop-filter:blur(8px);}
+.barin{display:flex;align-items:center;justify-content:space-between;gap:16px;
+ padding-block:12px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.brand img{width:40px;}
+.brand .n{font-family:var(--anton);font-size:19px;line-height:.92;text-transform:uppercase;letter-spacing:-.01em;}
+.brand .n i{font-style:normal;color:var(--rouge);}
+.brand .d{font-family:var(--bebas);font-size:12px;letter-spacing:.24em;color:var(--or);}
+nav{display:flex;gap:2px;flex-wrap:wrap;}
+nav button{font-family:var(--archivo);font-weight:700;font-size:12px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gris);background:none;border:0;padding:9px 13px;
+ cursor:pointer;border-bottom:3px solid transparent;transition:color .15s,border-color .15s;}
+nav button:hover{color:var(--creme);}
+nav button[aria-selected="true"]{color:var(--creme);border-bottom-color:var(--or);}
+
+/* ---------- BLOCS ---------- */
+section{padding-block:clamp(44px,6vw,76px);}
+.kick{font-family:var(--bebas);font-size:19px;letter-spacing:.3em;color:var(--or);margin:0 0 12px;}
+h1{font-family:var(--anton);font-size:clamp(46px,8.4vw,92px);line-height:.88;margin:0;
+ text-transform:uppercase;letter-spacing:-.02em;text-wrap:balance;}
+h1 .du{color:var(--rouge);}
+h2{font-family:var(--anton);font-size:clamp(30px,4.4vw,46px);line-height:1.02;margin:0 0 18px;
+ text-transform:uppercase;letter-spacing:-.012em;text-wrap:balance;}
+h3{font-family:var(--bebas);font-size:17px;letter-spacing:.26em;color:var(--or);margin:34px 0 10px;}
+p{margin:0 0 14px;max-width:66ch;color:rgba(244,241,234,.88);}
+p b{font-weight:900;color:var(--creme);}
+.rule{height:5px;background:var(--or);margin:24px 0;}
+
+/* duel */
+.duel{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:20px;}
+.tm .n{font-family:var(--anton);font-size:clamp(28px,4.6vw,50px);line-height:.94;text-transform:uppercase;}
+.tm .fl{display:flex;height:12px;border:2px solid var(--creme);margin-top:7px;}
+.tm .fl i{flex:1;}
+.xx{font-family:var(--anton);font-size:clamp(22px,3.4vw,36px);color:var(--or);padding-top:5px;}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--ligne);}
+.hero .bg{position:absolute;inset:0;}
+.hero .bg img{width:100%;height:100%;object-fit:cover;object-position:center 48%;}
+.hero .bg::after{content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,rgba(8,9,12,.93)0%,rgba(8,9,12,.62)42%,rgba(8,9,12,.97)100%);}
+.hero .in{position:relative;z-index:2;padding-block:clamp(48px,7vw,86px);}
+
+/* bandeau date */
+.datebar{background:var(--or);color:var(--noir);}
+.datein{display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;justify-content:space-between;
+ padding-block:18px;}
+.datein .j{font-family:var(--bebas);font-size:20px;letter-spacing:.3em;}
+.datein .d{font-family:var(--anton);font-size:clamp(30px,5vw,54px);line-height:.92;text-transform:uppercase;}
+.datein .r{font-family:var(--archivo);font-weight:900;font-size:14px;letter-spacing:.06em;line-height:1.5;}
+.datein .r span{display:block;font-weight:400;font-size:12px;letter-spacing:.14em;
+ text-transform:uppercase;color:rgba(8,9,12,.68);}
+
+/* chiffres */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;
+ border-top:3px solid var(--creme);margin-top:30px;}
+.kpi{padding:18px 20px 16px;border-right:1px solid var(--ligne);}
+.kpi:last-child{border-right:0;}
+.kpi b{display:block;font-family:var(--anton);font-size:clamp(34px,4.6vw,50px);line-height:.9;color:var(--or);}
+.kpi span{display:block;font-family:var(--archivo);font-weight:700;font-size:11.5px;
+ letter-spacing:.16em;text-transform:uppercase;color:var(--gris);margin-top:6px;}
+
+/* listes numérotées / étapes */
+.steps{margin-top:22px;}
+.step{display:flex;gap:18px;padding:15px 0;border-top:1px solid var(--ligne);align-items:flex-start;}
+.step .h{font-family:var(--anton);font-size:30px;line-height:.9;color:var(--or);
+ flex:0 0 88px;font-variant-numeric:tabular-nums;}
+.step .t b{display:block;font-family:var(--archivo);font-weight:900;font-size:17px;}
+.step .t span{display:block;font-size:13.5px;letter-spacing:.09em;text-transform:uppercase;
+ color:var(--gris);margin-top:3px;}
+
+/* œuvres — le bloc le plus soigné de la page */
+.oeuvre{background:var(--noir2);border-left:6px solid var(--rouge);padding:clamp(24px,4vw,42px);
+ margin-top:26px;}
+.causes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:26px;}
+.cause{border:1px solid var(--ligne);padding:24px 22px;}
+.cause .lab{font-family:var(--bebas);font-size:16px;letter-spacing:.26em;color:var(--or);}
+.cause h4{font-family:var(--anton);font-size:28px;line-height:1;margin:8px 0 10px;text-transform:uppercase;}
+.cause p{font-size:14.5px;margin:0;color:rgba(244,241,234,.8);}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2px;margin-top:26px;}
+.fl2{background:var(--noir2);padding:20px;border-top:3px solid var(--or);}
+.fl2 .n{font-family:var(--bebas);font-size:14px;letter-spacing:.24em;color:var(--gris);}
+.fl2 b{display:block;font-family:var(--anton);font-size:26px;line-height:1.02;margin-top:6px;text-transform:uppercase;}
+.fl2 span{display:block;font-size:13.5px;color:var(--gris);margin-top:7px;line-height:1.5;}
+
+/* tarifs */
+.tarifs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:24px;}
+.tc{border:2px solid var(--ligne);padding:22px 18px;text-align:center;}
+.tc b{display:block;font-family:var(--anton);font-size:44px;line-height:.9;}
+.tc span{display:block;font-family:var(--archivo);font-weight:700;font-size:11.5px;
+ letter-spacing:.16em;text-transform:uppercase;color:var(--gris);margin-top:8px;}
+.tc.hero2{border-color:var(--or);background:rgba(242,163,27,.10);}
+.tc.hero2 b{color:var(--or);}
+
+/* packs */
+.packs{margin-top:26px;}
+.pk{display:grid;grid-template-columns:minmax(0,1.1fr) 130px minmax(0,2fr);gap:18px;
+ padding:20px 0;border-top:1px solid var(--ligne);align-items:start;}
+.pk.top{background:var(--noir2);border-top:0;padding:22px 20px;margin-bottom:2px;}
+.pk .nm b{display:block;font-family:var(--anton);font-size:24px;line-height:1.02;text-transform:uppercase;}
+.pk .nm span{display:block;font-family:var(--bebas);font-size:12.5px;letter-spacing:.22em;color:var(--gris);margin-top:4px;}
+.pk .px{font-family:var(--anton);font-size:34px;line-height:1;color:var(--rouge);font-variant-numeric:tabular-nums;}
+.pk.top .px{color:var(--or);}
+.pk .ds{font-size:14px;color:rgba(244,241,234,.8);line-height:1.6;}
+@media(max-width:700px){.pk{grid-template-columns:1fr;gap:8px;}}
+
+/* boutons */
+.cta{display:inline-flex;align-items:center;gap:10px;font-family:var(--archivo);font-weight:900;
+ font-size:14px;letter-spacing:.14em;text-transform:uppercase;padding:15px 26px;
+ background:var(--or);color:var(--noir);text-decoration:none;border:0;cursor:pointer;
+ transition:transform .12s;}
+.cta:hover{transform:translateY(-2px);}
+.cta.ghost{background:none;color:var(--creme);border:2px solid var(--creme);}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;}
+
+/* infos */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px;margin-top:24px;}
+.info dt{font-family:var(--bebas);font-size:14px;letter-spacing:.24em;color:var(--or);margin-top:16px;}
+.info dd{margin:4px 0 0;font-size:15px;color:rgba(244,241,234,.86);}
+
+/* figure */
+figure{margin:28px 0 0;}
+figure img{width:100%;height:clamp(220px,34vw,380px);object-fit:cover;filter:contrast(1.06) saturate(1.1);}
+figcaption{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,241,234,.45);
+ margin-top:8px;}
+
+.note{border-top:1px solid var(--ligne);margin-top:28px;padding-top:14px;
+ font-size:12.5px;line-height:1.6;color:rgba(244,241,234,.5);}
+
+/* pied */
+footer{background:var(--noir2);border-top:1px solid var(--ligne);}
+.footin{padding-block:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px;}
+.footin .t{font-family:var(--anton);font-size:22px;line-height:1.06;text-transform:uppercase;}
+.footin p{font-size:14px;margin:8px 0 0;}
+.partenaires{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.slot{flex:1 1 130px;min-height:56px;border:1px dashed rgba(244,241,234,.28);display:flex;
+ align-items:center;justify-content:center;padding:8px;text-align:center;
+ font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.42);}
+.slot img{max-height:38px;width:auto;}
+.legal{border-top:1px solid var(--ligne);padding-block:16px;font-size:11.5px;
+ letter-spacing:.1em;text-transform:uppercase;color:rgba(244,241,234,.42);}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+
+<header class="bar">
+  <div class="wrap barin">
+    <a class="brand" href="#" onclick="go('accueil');return false;">
+      <img src="lions.png" alt="Lions Club de Chaumont-Gistoux">
+      <span>
+        <span class="n">Le Match <i>du</i> Ronvau</span>
+        <span class="d">22.05.2027</span>
+      </span>
+    </a>
+    <nav role="tablist" aria-label="Sections du site">
+      <button role="tab" id="t-accueil"     aria-selected="true"  onclick="go('accueil')">Accueil</button>
+      <button role="tab" id="t-spectacle"   aria-selected="false" onclick="go('spectacle')">Le spectacle</button>
+      <button role="tab" id="t-oeuvres"     aria-selected="false" onclick="go('oeuvres')">Nos œuvres</button>
+      <button role="tab" id="t-billetterie" aria-selected="false" onclick="go('billetterie')">Billetterie</button>
+      <button role="tab" id="t-partenaires" aria-selected="false" onclick="go('partenaires')">Partenaires</button>
+      <button role="tab" id="t-infos"       aria-selected="false" onclick="go('infos')">Infos pratiques</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ ACCUEIL ============ -->
+<main id="p-accueil" role="tabpanel" aria-labelledby="t-accueil">
+  <div class="hero">
+    <div class="bg"><img src="hero.jpg" alt="Un match d'improvisation vu de la passerelle : la patinoire, l'arbitre et les deux équipes"></div>
+    <div class="wrap in">
+      <p class="kick">Match d'improvisation théâtrale · Tout public</p>
+      <h1>Le match <span class="du">du</span> Ronvau</h1>
+      <div class="rule"></div>
+      <div class="duel">
+        <div class="tm"><div class="n">Belgique</div>
+          <div class="fl"><i style="background:#0B0B0B"></i><i style="background:#F2A31B"></i><i style="background:#D8202C"></i></div></div>
+        <div class="xx">✕</div>
+        <div class="tm"><div class="n">France</div>
+          <div class="fl"><i style="background:#00338D"></i><i style="background:#F4F1EA"></i><i style="background:#D8202C"></i></div></div>
+      </div>
+      <p style="margin-top:26px;font-size:18px">Deux équipes, une patinoire, un arbitre et ses cartons.
+        Les comédiens montent sur la glace sans texte, sans décor et sans filet — et c'est
+        <b>vous</b> qui votez.</p>
+      <div class="ctas">
+        <button class="cta" onclick="go('billetterie')">Réserver ma place</button>
+        <button class="cta ghost" onclick="go('oeuvres')">Ce que soutient votre billet</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="datebar"><div class="wrap datein">
+    <div><div class="j">Samedi</div><div class="d">22 mai 2027</div></div>
+    <div class="r">18h00 — Repas sous chapiteau<span>20h00 — Coup d'envoi du match</span></div>
+    <div class="r">Centre sportif André Docquier<span>Avenue du Ronvau 8 · Chaumont-Gistoux</span></div>
+  </div></div>
+
+  <section><div class="wrap">
+    <p class="kick">Une soirée du Lions Club de Chaumont-Gistoux</p>
+    <h2>Un samedi soir où<br>personne ne sait<br>ce qui va se passer.</h2>
+    <p>Le Lions Club de Chaumont-Gistoux reçoit <b>IMPROVISATION.BE</b> pour une rencontre
+      internationale Belgique – France, précédée d'un repas sous chapiteau. Un spectacle familial,
+      drôle et imprévisible, des grands-parents aux enfants.</p>
+    <p><b>L'intégralité du bénéfice va aux œuvres du club</b> — causes handicap et enfance.</p>
+
+    <div class="kpis">
+      <div class="kpi"><b>400</b><span>Places<br>disponibles</span></div>
+      <div class="kpi"><b>200</b><span>Couverts<br>au chapiteau</span></div>
+      <div class="kpi"><b>17</b><span>Comédiens<br>et arbitres</span></div>
+      <div class="kpi"><b>100 %</b><span>Du bénéfice<br>aux œuvres</span></div>
+    </div>
+
+    <figure>
+      <img src="public.jpg" alt="Les équipes saluent une salle comble à la fin du match">
+      <figcaption>Photo © IMPROVISATION.BE</figcaption>
+    </figure>
+  </div></section>
+</main>
+
+<!-- ============ LE SPECTACLE ============ -->
+<main id="p-spectacle" role="tabpanel" aria-labelledby="t-spectacle" hidden>
+  <section><div class="wrap">
+    <p class="kick">Le spectacle</p>
+    <h2>Le hockey a donné<br>ses règles au théâtre.</h2>
+    <p>Le match d'improvisation naît au Québec dans les années 1970 : deux comédiens ont l'idée de
+      ramener au théâtre la patinoire, l'arbitre et les maillots du hockey, pour attirer le public
+      du sport. Le principe n'a pas bougé depuis — et il fonctionne toujours aussi bien.</p>
+    <p>Deux équipes s'affrontent sur des thèmes tirés au sort, sans texte, sans décor et sans
+      répétition. L'arbitre siffle les fautes. <b>Et c'est le public qui vote</b>, carton bleu ou
+      carton rouge à la main, à la fin de chaque manche.</p>
+
+    <h3>Les six règles à connaître</h3>
+    <div class="steps">
+      <div class="step"><div class="h">01</div><div class="t"><b>L'arbitre annonce le thème</b>
+        <span>Tiré au sort · catégorie, nombre de joueurs, durée</span></div></div>
+      <div class="step"><div class="h">02</div><div class="t"><b>Vingt secondes de caucus</b>
+        <span>C'est tout ce que les équipes ont pour se mettre d'accord</span></div></div>
+      <div class="step"><div class="h">03</div><div class="t"><b>Les équipes jouent</b>
+        <span>Mixte : ensemble · Comparée : l'une après l'autre</span></div></div>
+      <div class="step"><div class="h">04</div><div class="t"><b>L'arbitre siffle les fautes</b>
+        <span>Cabotinage, rudesse, refus de plate-forme, cliché…</span></div></div>
+      <div class="step"><div class="h">05</div><div class="t"><b>Vous votez</b>
+        <span>Levez le carton de l'équipe que vous avez préférée</span></div></div>
+      <div class="step"><div class="h">06</div><div class="t"><b>On recommence</b>
+        <span>Deux périodes, avec une pause de 30 minutes au milieu</span></div></div>
+    </div>
+
+    <figure>
+      <img src="arbitre.jpg" alt="L'arbitre brandit le carton annonçant le thème de la manche">
+      <figcaption>Photo © IMPROVISATION.BE</figcaption>
+    </figure>
+
+    <h3>Le déroulé de la soirée</h3>
+    <div class="steps">
+      <div class="step"><div class="h">18h</div><div class="t"><b>Ouverture du chapiteau et repas</b>
+        <span>Chili con carne · version végétarienne · bar</span></div></div>
+      <div class="step"><div class="h">20h</div><div class="t"><b>Mots d'accueil et coup d'envoi</b>
+        <span>Présidente, bourgmestre, échevin des Sports, RCA · première période</span></div></div>
+      <div class="step"><div class="h">21h</div><div class="t"><b>Pause</b>
+        <span>Trente minutes · la cafétéria vous attend</span></div></div>
+      <div class="step"><div class="h">21h30</div><div class="t"><b>Deuxième période</b>
+        <span>Jusqu'à la sirène</span></div></div>
+      <div class="step"><div class="h">22h45</div><div class="t"><b>Remise du chèque aux œuvres</b>
+        <span>Verre de l'amitié · rencontre avec les comédiens · fin vers 23h</span></div></div>
+    </div>
+
+    <h3>Notre partenaire artistique</h3>
+    <p><b>IMPROVISATION.BE</b> fait vivre l'improvisation en Brabant wallon et à Bruxelles depuis 1999,
+      avec quatre équipes vedettes — les Aigles, les Lions, les Pythons et les Requins — et des matchs
+      réguliers à Wavre, Ottignies et Rixensart. Elle fournit les comédiens, l'arbitre, le maître de
+      cérémonie, les musiques et les scénarios.</p>
+
+    <div class="ctas"><button class="cta" onclick="go('billetterie')">Voir les tarifs</button></div>
+  </div></section>
+</main>
+
+<!-- ============ NOS ŒUVRES ============ -->
+<main id="p-oeuvres" role="tabpanel" aria-labelledby="t-oeuvres" hidden>
+  <section><div class="wrap">
+    <p class="kick">Ce que vous soutenez</p>
+    <h2>Où va votre billet.</h2>
+
+    <div class="oeuvre">
+      <p style="font-size:19px;margin-bottom:0"><b>Le Lions Club de Chaumont-Gistoux est une
+        association de bénévoles. Personne n'y est rémunéré</b> — ni le soir du match, ni le reste
+        de l'année. Une fois les frais de la soirée couverts, tout ce qui reste part aux œuvres.</p>
+    </div>
+
+    <div class="flow">
+      <div class="fl2"><div class="n">Vous payez</div><b>Un billet<br>ou un forfait</b>
+        <span>29 € l'entrée, 47 € le repas et le match (40 € jusqu'à 15 ans)</span></div>
+      <div class="fl2"><div class="n">Nous couvrons</div><b>Les frais<br>de la soirée</b>
+        <span>La salle, la troupe, le chapiteau, la technique, les denrées</span></div>
+      <div class="fl2"><div class="n">Le club verse</div><b>Le solde<br>aux œuvres</b>
+        <span>Décidé en assemblée, suivi par la commission des œuvres</span></div>
+    </div>
+
+    <h3>Nos deux causes prioritaires</h3>
+    <div class="causes">
+      <div class="cause">
+        <div class="lab">CAUSE 01</div>
+        <h4>Le handicap</h4>
+        <p>Soutien à des familles et à des institutions de la région : matériel adapté, aménagements,
+          aide ponctuelle à des situations qui nous sont signalées près de chez nous.</p>
+      </div>
+      <div class="cause">
+        <div class="lab">CAUSE 02</div>
+        <h4>L'enfance</h4>
+        <p>Séjours, loisirs et activités pour des enfants qui n'y auraient pas accès, et appui aux
+          structures qui les accompagnent au quotidien dans le Brabant wallon.</p>
+      </div>
+    </div>
+
+    <h3>Le mouvement Lions</h3>
+    <p>Fondé en 1917, le mouvement Lions réunit aujourd'hui plus de 1,4 million de membres dans le
+      monde autour d'une seule devise : <b>« Soutenir jusqu'à ce que ce soit soutenu. »</b>
+      Le club de Chaumont-Gistoux compte dix-sept membres et se réunit deux fois par mois.</p>
+
+    <h3>Aider autrement</h3>
+    <p>Devenir Ami du Match à partir de 100 €, soutenir une prochaine action, ou simplement nous
+      rencontrer — nous cherchons toujours des bras.</p>
+    <div class="ctas">
+      <a class="cta" href="mailto:contact@lematchduronvau.be?subject=Je%20souhaite%20aider%20le%20Lions%20Club%20de%20Chaumont-Gistoux">Nous écrire</a>
+      <button class="cta ghost" onclick="go('partenaires')">Devenir partenaire</button>
+    </div>
+
+    <figure>
+      <img src="rire.jpg" alt="Une comédienne en maillot bleu éclate de rire pendant une improvisation">
+      <figcaption>Photo © IMPROVISATION.BE</figcaption>
+    </figure>
+
+    <p class="note">Emplacement réservé au détail chiffré des œuvres soutenues sur l'exercice en cours —
+      à compléter par la commission des œuvres du club avant la mise en ligne.</p>
+  </div></section>
+</main>
+
+<!-- ============ BILLETTERIE ============ -->
+<main id="p-billetterie" role="tabpanel" aria-labelledby="t-billetterie" hidden>
+  <section><div class="wrap">
+    <p class="kick">Billetterie</p>
+    <h2>400 places.<br>Pas une de plus.</h2>
+    <p>Le hall accueille 400 spectateurs et le chapiteau 200 couverts. Les forfaits repas partent en
+      premier : c'est la formule qui fait la soirée complète.</p>
+
+    <div class="tarifs">
+      <div class="tc"><b>29 €</b><span>Adulte</span></div>
+      <div class="tc"><b>26 €</b><span>Étudiant</span></div>
+      <div class="tc"><b>20 €</b><span>Enfant jusqu'à 15 ans</span></div>
+      <div class="tc hero2"><b>47 €</b><span>Repas + match</span></div>
+      <div class="tc hero2"><b>40 €</b><span>Repas + match jusqu'à 15 ans</span></div>
+    </div>
+
+    <h3>Ce que comprend le forfait à 47 €</h3>
+    <div class="steps">
+      <div class="step"><div class="h">18h</div><div class="t"><b>Votre place à table sous le chapiteau</b>
+        <span>Chili con carne · version végétarienne sur demande</span></div></div>
+      <div class="step"><div class="h">20h</div><div class="t"><b>Votre place pour le match</b>
+        <span>Placement libre autour de la patinoire</span></div></div>
+    </div>
+
+    <h3>Réserver</h3>
+    <p>La billetterie en ligne ouvre en janvier 2027. D'ici là, vous pouvez déjà nous signaler votre
+      intérêt — nous vous préviendrons dès l'ouverture, avant l'annonce publique.</p>
+    <div class="ctas">
+      <a class="cta" href="mailto:contact@lematchduronvau.be?subject=Pr%C3%A9-r%C3%A9servation%20-%20Le%20Match%20du%20Ronvau&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20pr%C3%A9venu%20de%20l%27ouverture%20de%20la%20billetterie.%0A%0ANom%20%3A%0ANombre%20de%20personnes%20%3A%0AFormule%20souhait%C3%A9e%20(match%20seul%20ou%20repas%20%2B%20match)%20%3A%0A%0AMerci%20%21">Être prévenu de l'ouverture</a>
+    </div>
+
+    <figure>
+      <img src="salle.jpg" alt="Le public debout applaudit à la fin de la rencontre">
+      <figcaption>Photo © IMPROVISATION.BE</figcaption>
+    </figure>
+
+    <p class="note">Adresse de billetterie et système de réservation en ligne à mettre en place avant janvier 2027.</p>
+  </div></section>
+</main>
+
+<!-- ============ PARTENAIRES ============ -->
+<main id="p-partenaires" role="tabpanel" aria-labelledby="t-partenaires" hidden>
+  <section><div class="wrap">
+    <p class="kick">Devenir partenaire</p>
+    <h2>Votre nom, quatre mois<br>dans la commune.</h2>
+    <p>La campagne démarre en janvier 2027 et court jusqu'à la soirée : <b>150 affiches</b> dans les
+      commerces et les écoles, <b>5 000 flyers</b> toutes-boîtes, les réseaux sociaux, la presse
+      locale — puis une soirée de contact direct avec 400 personnes.</p>
+
+    <h3>Les formules</h3>
+    <div class="packs">
+      <div class="pk top">
+        <div class="nm"><b>Partenaire principal</b><span>Un seul partenaire</span></div>
+        <div class="px">2 500 €</div>
+        <div class="ds">Votre nom associé à l'événement sur tous les supports · deux panneaux au bord
+          de la patinoire · page entière dans le booklet · citation à chaque prise de parole ·
+          10 forfaits repas + match · 4 invitations au verre officiel.</div>
+      </div>
+      <div class="pk">
+        <div class="nm"><b>Partenaire Or</b><span>Quatre maximum</span></div>
+        <div class="px">1 000 €</div>
+        <div class="ds">Logo sur l'affiche, le flyer et le booklet · un panneau de patinoire ·
+          demi-page booklet · citation en ouverture · 6 forfaits repas + match.</div>
+      </div>
+      <div class="pk">
+        <div class="nm"><b>Partenaire Argent</b><span>Huit maximum</span></div>
+        <div class="px">500 €</div>
+        <div class="ds">Logo sur le flyer, le booklet et le site · panneau partagé au bord de la
+          patinoire · quart de page booklet · 4 places pour le match.</div>
+      </div>
+      <div class="pk">
+        <div class="nm"><b>Partenaire Bronze</b><span>Sans limite</span></div>
+        <div class="px">250 €</div>
+        <div class="ds">Logo dans le booklet et sur ce site · mention sur les réseaux sociaux ·
+          2 places pour le match.</div>
+      </div>
+      <div class="pk">
+        <div class="nm"><b>Ami du Match</b><span>Particuliers et indépendants</span></div>
+        <div class="px">100 €</div>
+        <div class="ds">Votre nom dans la page « Ils nous ont soutenus » du booklet ·
+          1 place pour le match.</div>
+      </div>
+    </div>
+
+    <h3>Deux autres façons d'aider</h3>
+    <p><b>Le partenariat en nature.</b> Boissons, denrées, impression, transport, matériel technique,
+      lot pour la tombola : nous valorisons votre apport au prix du marché et vous plaçons dans la
+      formule correspondante.</p>
+    <p><b>Le don simple.</b> Sans contrepartie publicitaire, affecté directement aux œuvres du club.</p>
+
+    <div class="ctas">
+      <a class="cta" href="mailto:partenaires@lematchduronvau.be?subject=Partenariat%20-%20Le%20Match%20du%20Ronvau%2022%20mai%202027&amp;body=Bonjour%2C%0A%0ANotre%20entreprise%20souhaite%20en%20savoir%20plus%20sur%20le%20partenariat.%0A%0AEntreprise%20%3A%0APersonne%20de%20contact%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0AFormule%20envisag%C3%A9e%20%3A%0A%0AMerci%20de%20me%20recontacter.">Demander le dossier de partenariat</a>
+    </div>
+
+    <figure>
+      <img src="plongee.jpg" alt="Vue plongeante sur la patinoire pendant une manche">
+      <figcaption>Photo © IMPROVISATION.BE</figcaption>
+    </figure>
+
+    <p class="note">Montants et contreparties proposés par la commission Ligue d'Impro, soumis à la
+      validation du comité du club. Les partenariats sont enregistrés par ordre de signature, dans la
+      limite des places disponibles par formule. Le club n'est pas assujetti à la TVA : les montants
+      sont nets et font l'objet d'une note de frais de partenariat.</p>
+  </div></section>
+</main>
+
+<!-- ============ INFOS PRATIQUES ============ -->
+<main id="p-infos" role="tabpanel" aria-labelledby="t-infos" hidden>
+  <section><div class="wrap">
+    <p class="kick">Infos pratiques</p>
+    <h2>Venir au Ronvau.</h2>
+
+    <div class="grid2">
+      <dl class="info">
+        <dt>LE LIEU</dt>
+        <dd><b>Centre sportif André Docquier</b><br>Avenue du Ronvau 8<br>1325 Chaumont-Gistoux</dd>
+        <dt>SE GARER</dt>
+        <dd>Grand parking gratuit devant le hall, fléché et accueilli par nos hôtesses le soir même.
+          Le parking arrière est réservé aux officiels et aux équipes.</dd>
+        <dt>ACCESSIBILITÉ</dt>
+        <dd>Hall, chapiteau et sanitaires accessibles aux personnes à mobilité réduite.
+          Le cheminement entre le chapiteau et le hall fait une vingtaine de mètres, à couvert.</dd>
+      </dl>
+      <dl class="info">
+        <dt>LES HORAIRES</dt>
+        <dd>Chapiteau 18h00 – 19h45 · Soirée au hall 20h00 – 23h00 · Cafétéria 18h00 – 00h00</dd>
+        <dt>SUR PLACE</dt>
+        <dd>Le chapiteau ferme à 19h45. À partir de cette heure, la cafétéria du centre sportif,
+          exploitée par la Régie communale autonome, devient le point de vente des boissons.</dd>
+        <dt>POUR QUI ?</dt>
+        <dd>Tout public. Le spectacle est familial et se suit sans rien connaître à l'improvisation —
+          les règles sont expliquées en ouverture.</dd>
+      </dl>
+    </div>
+
+    <h3>Nous écrire</h3>
+    <div class="grid2">
+      <dl class="info">
+        <dt>QUESTIONS ET RÉSERVATIONS</dt>
+        <dd><a href="mailto:contact@lematchduronvau.be">contact@lematchduronvau.be</a></dd>
+        <dt>PARTENARIATS</dt>
+        <dd><a href="mailto:partenaires@lematchduronvau.be">partenaires@lematchduronvau.be</a></dd>
+      </dl>
+      <dl class="info">
+        <dt>PRESSE ET PROTOCOLE</dt>
+        <dd><a href="mailto:protocole@lematchduronvau.be">protocole@lematchduronvau.be</a></dd>
+        <dt>ORGANISATION</dt>
+        <dd>Commission Ligue d'Impro<br>Lions Club de Chaumont-Gistoux</dd>
+      </dl>
+    </div>
+
+    <p class="note">Adresses de contact à créer avant la mise en ligne publique. Le numéro de GSM
+      n'est volontairement pas publié.</p>
+  </div></section>
+</main>
+
+<footer>
+  <div class="wrap footin">
+    <div>
+      <div class="t">Soutenir jusqu'à ce que<br>ce soit soutenu.</div>
+      <p>Lions Club de Chaumont-Gistoux<br>Commission Ligue d'Impro</p>
+    </div>
+    <div>
+      <div class="t" style="font-size:16px;font-family:var(--bebas);letter-spacing:.24em;color:var(--or)">ORGANISATION &amp; PARTENAIRES</div>
+      <div class="partenaires">
+        <div class="slot"><img src="lions.png" alt="Lions Club de Chaumont-Gistoux"></div>
+        <div class="slot">IMPROVISATION.BE</div>
+        <div class="slot">Commune de Chaumont-Gistoux</div>
+        <div class="slot">RCA — Centre sportif André Docquier</div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap legal">Samedi 22 mai 2027 · Centre sportif André Docquier, Chaumont-Gistoux ·
+    Photos © IMPROVISATION.BE</div>
+</footer>
+
+<script>
+var PAGES = ['accueil','spectacle','oeuvres','billetterie','partenaires','infos'];
+function go(id){
+  PAGES.forEach(function(p){
+    var panel = document.getElementById('p-'+p);
+    var tab   = document.getElementById('t-'+p);
+    var on = (p === id);
+    panel.hidden = !on;
+    tab.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  try{ localStorage.setItem('ronvau-tab', id); }catch(e){}
+  window.scrollTo({top:0, behavior:'instant'});
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('ronvau-tab'); }catch(e){}
+  if (saved && PAGES.indexOf(saved) !== -1) go(saved);
+})();
+</script>
