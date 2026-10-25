@@ -20,7 +20,14 @@ export function Footer() {
             <div className="slot">
               <img src="/lions.png" alt="Lions Club de Chaumont-Gistoux" />
             </div>
-            <div className="slot">IMPROVISATION.BE</div>
+            <a
+              className="slot slot-link"
+              href="https://www.improvisation.be/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              IMPROVISATION.BE
+            </a>
             <div className="slot">Commune de Chaumont-Gistoux</div>
             <div className="slot">RCA — Centre sportif André Docquier</div>
           </div>
