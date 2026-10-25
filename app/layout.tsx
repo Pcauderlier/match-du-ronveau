@@ -1,3 +1,5 @@
+// Test de Laurent : vérification du flux branche laurent → pull request (à supprimer).
+// Test 2 de Laurent : second contrôle du push (à supprimer).
 import type { Metadata } from "next";
 import { Anton, Archivo, Bebas_Neue } from "next/font/google";
 import { Footer } from "@/components/Footer";
