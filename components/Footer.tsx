@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer>
@@ -35,7 +37,7 @@ export function Footer() {
       </div>
       <div className="wrap legal">
         Samedi 22 mai 2027 · Centre sportif André Docquier, Chaumont-Gistoux · Photos ©
-        IMPROVISATION.BE
+        IMPROVISATION.BE · <Link href="/espace-sponsor">Espace sponsor</Link>
       </div>
     </footer>
   );
