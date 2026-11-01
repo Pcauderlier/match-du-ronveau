@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Partenaires",
@@ -100,7 +101,11 @@ export default function PartenairesPage() {
             <a className="cta" href={PARTENARIAT_MAIL}>
               Demander le dossier de partenariat
             </a>
+            <Link className="cta ghost" href="/espace-sponsor">
+              Espace sponsor
+            </Link>
           </div>
+          <p>Saisissez le code reçu pour ajouter vos invités.</p>
 
           <figure>
             <img src="/plongee.jpg" alt="Vue plongeante sur la patinoire pendant une manche" />

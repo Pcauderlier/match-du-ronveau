@@ -9,7 +9,7 @@ import { withDb } from "@/db/client";
 import { invites, sponsors } from "@/db/schema";
 import { formatCode } from "@/lib/codes";
 import { DB_MISSING, isAdminPasswordConfigured, isDatabaseConfigured } from "@/lib/env";
-import { GUEST_LIMIT, guestLimitMessage, ROLE_LABEL } from "@/lib/labels";
+import { GUEST_LIMIT, GUEST_QUOTA_NOTE, guestLimitMessage, ROLE_LABEL } from "@/lib/labels";
 import { getSponsorSession } from "@/lib/session";
 
 export const metadata: Metadata = {
@@ -119,6 +119,7 @@ export default async function EspaceSponsorPage() {
           <p>
             Invités : <span className="code">{guestList.length} / {maxInvites}</span>
           </p>
+          <p className="quiet">{GUEST_QUOTA_NOTE}</p>
           <p className="quiet">
             {restants === 0
               ? guestLimitMessage(sponsor.role)

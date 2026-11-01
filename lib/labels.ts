@@ -8,16 +8,21 @@ export const ROLE_LABEL: Record<Role, string> = {
   bronze: "Bronze",
 };
 
+/** Noms que le sponsor peut encore ajouter : il occupe déjà une place du forfait. */
 export const GUEST_LIMIT: Record<Role, number> = {
-  principal: 10,
-  or: 6,
-  argent: 4,
-  bronze: 2,
+  principal: 9,
+  or: 5,
+  argent: 3,
+  bronze: 1,
 };
+
+export const GUEST_QUOTA_NOTE =
+  "Vous êtes déjà inclus dans le forfait : ces places sont pour vos invités.";
 
 export function guestLimitMessage(role: Role): string {
   const max = GUEST_LIMIT[role];
-  return `Limite atteinte : un sponsor ${ROLE_LABEL[role]} peut ajouter ${max} invités au maximum.`;
+  const places = max > 1 ? `${max} invités` : "1 invité";
+  return `Limite atteinte : un sponsor ${ROLE_LABEL[role]} peut ajouter ${places} au maximum.`;
 }
 
 export const FORMULES = ["match", "repas"] as const;
