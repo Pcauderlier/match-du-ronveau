@@ -4,7 +4,7 @@ import { isAdminPasswordConfigured, readEnv } from "@/lib/env";
 
 const ADMIN_COOKIE = "mdr_admin";
 const SPONSOR_COOKIE = "mdr_sponsor";
-const MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
+const MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 
 type AdminSession = { role: "admin"; exp: number };
 type SponsorSession = { role: "sponsor"; sponsorId: string; exp: number };
@@ -100,7 +100,7 @@ export async function setAdminSession(): Promise<boolean> {
 
 export async function clearAdminSession(): Promise<void> {
   const jar = await cookies();
-  jar.set(ADMIN_COOKIE, "", cookieOptions(0));
+  jar.set(ADMIN_COOKIE, "", { ...cookieOptions(0), expires: new Date(0) });
 }
 
 export async function getAdminSession(): Promise<AdminSession | null> {
@@ -126,7 +126,7 @@ export async function setSponsorSession(sponsorId: string): Promise<boolean> {
 
 export async function clearSponsorSession(): Promise<void> {
   const jar = await cookies();
-  jar.set(SPONSOR_COOKIE, "", cookieOptions(0));
+  jar.set(SPONSOR_COOKIE, "", { ...cookieOptions(0), expires: new Date(0) });
 }
 
 export async function getSponsorSession(): Promise<SponsorSession | null> {
